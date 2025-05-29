@@ -1,28 +1,30 @@
 from settings import *
-from Tetris import Tetris
-import sys
+import math
+from tetromino import Tetromino
 
-class App:
-    def __init__(self):
-        pg.init()
-        pg.display.set_caption('Tetris')
-        self.screen = pg.display.set_mode(FIELD_RES)
-        self.clock = pg.time.Clock()
-        self.tetris = Tetris(self)
+class Tetris:
+    def __init__(self,app):
+        self.app = app
+        self.tetromino = Tetromino(self)
 
-    def update(self):
-        self.tetris.update()
-        self.clock.tick(FPS)
+    def control(self, pressed_key):
+        if pressed_key == pg.K_LEFT:
+            self.tetromino.move(direction='left')
+        elif pressed_key == pg.K_RIGHT:
+            self.tetromino.move(direction='right')
 
-    def draw(self):
-        self.screen.fill(color=FIELD_COLOR)
-        self.tetris.draw()
-        pg.display.flip()
+    def draw_grid(self):
+        for x in range(FIELD_W):
+            for y in range(FIELD_H):
+                pg.draw.rect(self.app.screen, 'black',
+                             (x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, TILE_SIZE), 1)
 
-    def check_events(self):
-        for event in pg.event.get():
-            if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
-                pg.quit()
-                sys.exit()
-                
-    
+def update(self):
+    if self.anim_trigger:
+    self.tetromino.update()
+    self.sprite_group.update()
+
+def draw(self):
+    self.draw_grid()
+    self.sprite_group.draw(self.app.screen)
+                             
